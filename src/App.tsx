@@ -1,24 +1,41 @@
-import React from 'react';
-import logo from './logo.svg';
+import React, { useState } from 'react';
 import './App.css';
 
+export interface CheckboxType {
+  name: string
+}
+
+const inputs: CheckboxType[] = [
+  {name: 'Select all'},
+  {name: 'Item1'},
+  {name: 'Item2'},
+  {name: 'Item3'},
+  {name: 'Item4'},
+];
+
 function App() {
+  const [checkedBoxes, setCheckedBoxes] = useState<boolean[]>(inputs.map(c => false));
+
+  const handleToggle = (index: number) => () => {
+    let checkedInputs = [...checkedBoxes];
+    if (index === 0) {
+      checkedInputs = checkedBoxes[0] ? checkedInputs.map(c => false) : checkedInputs.map(c => true);
+    } else {
+      checkedInputs[index] = !checkedInputs[index];
+    }
+    setCheckedBoxes(checkedInputs);
+  };
+
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      {
+        inputs && inputs.map((c: CheckboxType, i: number) => (
+          <li key={i}>
+              <input type="checkbox" onChange={handleToggle(i)} className="checkbox" checked={checkedBoxes[i]} />
+              <label>{c.name}</label>
+          </li>
+      ))
+      }
     </div>
   );
 }
