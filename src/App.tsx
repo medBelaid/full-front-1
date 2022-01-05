@@ -1,11 +1,11 @@
 import React, { useState } from 'react';
 import './App.css';
 
-export interface CheckboxType {
+export interface CheckboxLabel {
   name: string
 }
 
-const inputs: CheckboxType[] = [
+const inputs: CheckboxLabel[] = [
   {name: 'Select all'},
   {name: 'Item1'},
   {name: 'Item2'},
@@ -29,7 +29,7 @@ function App() {
   return (
     <div className="App">
       {
-        inputs && inputs.map((c: CheckboxType, i: number) => (
+        inputs && inputs.map((c: CheckboxLabel, i: number) => (
           <li key={i}>
               <input type="checkbox" onChange={handleToggle(i)} className="checkbox" checked={checkedBoxes[i]} />
               <label>{c.name}</label>
